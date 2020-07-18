@@ -1,0 +1,302 @@
+:root {
+    --color-blue: #e6e6e6;
+    --color-deepBlue: black;
+    --color-bg: white;
+}
+
+html,body {
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    background-color: white;
+}
+
+header {
+    height: 150px;
+    border-radius: 8px;
+
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    border-top: 8px solid var(--color-blue);
+    border-left: 8px solid var(--color-blue);
+    border-bottom: 8px solid var(--color-deepBlue);
+    border-right: 8px solid var(--color-deepBlue);
+
+    background-color: var(--color-bg);
+}
+
+.middle {   
+    height: 75%;
+    margin-bottom: 30px;
+}
+
+nav {
+    background-color: var(--color-bg);
+
+    float: left;
+    border-radius: 8px;
+
+    border-top: 8px solid black;
+    border-left: 8px solid black;
+    border-bottom: 8px solid var(--color-deepBlue);
+    border-right: 8px solid var(--color-deepBlue);
+
+    padding-left: 0.1%;
+    padding-right: 0.1%;
+
+    width: 25%;
+    height: 92%;
+}
+
+aside {
+    background-color: var(--color-bg);
+    
+    float: right;
+    border-radius: 8px;
+
+    border-top: 8px solid black;
+    border-left: 8px solid black;
+    border-bottom: 8px solid var(--color-deepBlue);
+    border-right: 8px solid var(--color-deepBlue);
+
+    padding: 0% 2%;
+
+    width: 67%;
+    height: 92%;
+
+
+}
+
+.todoInput {
+
+    width: 80%;
+    
+
+    
+
+    margin: 30px auto;    
+
+    margin-top: 60px;
+
+    border-radius: 8px;
+
+    
+ 
+}
+
+.createTag {
+
+    width: 80%;
+    height: 30%;
+
+    margin: 20px auto;
+
+    background-color: white;
+    border-radius: 8px;
+
+}
+
+.addImg{
+
+    width: 9%;
+
+    float: right;
+
+}
+
+.posTag {
+
+    margin-top: 10px;
+
+    width: 100%;
+    height: 70%;
+}
+
+.Tag {
+
+    background-color: white;
+
+    padding: 2px 5px;
+
+    border-radius: 20px;
+
+    display: inline-block;
+
+    
+    border-top: 5px solid var(--color-blue);
+    border-left: 5px solid var(--color-blue);
+    border-bottom: 5px solid var(--color-deepBlue);
+    border-right: 5px solid var(--color-deepBlue);
+
+}
+
+.tagInput {
+
+    width: 80px;
+    height: 10px;
+
+}
+
+.delImg {
+
+    width: 17px;
+
+    margin-left: 5px;
+    vertical-align: middle;
+
+}
+
+
+
+
+.selectColor {
+
+    width: 80%;
+    height: 30%;
+
+    margin: 20px auto;
+
+    margin-bottom: 0px;
+
+    background-color: white;
+    border-radius: 8px;
+
+    display: block;
+}
+
+.color {
+
+    margin: 7% 3%;
+    width: 8%;
+    height: 13%;
+    border-radius: 50%;
+
+    vertical-align: middle;
+    text-align: bottom;
+
+    border: 0.1px solid black;
+
+}
+
+.inputSize {
+
+    width: 80%;
+    padding: 0% 2%;
+
+    margin-left: 5px;
+    margin-top: 15px;
+
+    border: none;
+}
+
+p {
+    display: inline;    
+}
+
+h4 {
+    vertical-align: bottom;
+
+    padding-right: 20px;
+
+    display: inline;
+    
+}
+
+
+.filter {
+
+    margin-top: 15px;
+    margin-right: 15px;
+
+    text-align: right;
+
+    padding: 5px auto;
+
+}
+
+.showTodoList {
+
+
+    width: 48%;
+    height: 80%;
+
+    /* border: 1px solid gray; */
+
+}
+
+.field {
+
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    
+    width: 50%;
+
+    margin: auto;
+
+    color: gray;
+
+}
+
+legend {
+
+    text-align: center;
+    padding: 5px 5px;
+    border-color: gray;
+    
+}
+
+.todo {
+
+    width: 85%;
+    height: 14%;
+
+    border-radius: 10px;
+    border: 2px solid black;
+
+    margin: auto auto;
+
+    margin-bottom: 2px;
+    
+}
+
+input[type="checkbox"] {
+
+    display: none;
+
+}
+
+input[type="checkbox"] + label span {
+
+    display: inline-block;
+    width: 25px;
+    height: 25px; 
+
+    background: url(./image/unchecked-checkbox.png) left top no-repeat;
+    background-size: 25px;
+
+    cursor:pointer;
+    vertical-align:middle;
+
+    margin-top: AUTO;
+    margin-left: auto;
+
+}
+
+input[type="checkbox"]:checked + label span {
+
+    background: url(./image/checked-checkbox.png) left top no-repeat;
+    background-size: 25px;
+
+}
+
+.colorForm {
+
+    width: 20px;
+    height: 5px;
+
+    border-radius: 10px;
+
+}
