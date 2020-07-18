@@ -112,6 +112,7 @@ function readDB(){
     }
 
     createTagForm.addEventListener("click", addNewForm);
+    
 
 }
 
@@ -230,6 +231,7 @@ function enrollEvent() {
 
 function init(){
 
+    
     readDB();
     colorEvent();
 
@@ -237,4 +239,5 @@ function init(){
 
 }
 
+console.log("Asdfsa");
 init();

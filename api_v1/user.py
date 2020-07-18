@@ -8,7 +8,7 @@ def addList():
     if request.method == "POST":
         
         data = request.get_json()
-        title = data.get('title'    )
+        title = data.get('title')
         color = data.get('color')
         tag = data.get('tag')
 

@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask,render_template
 from models import db
 from api_v1 import api as api_v1
 
@@ -8,7 +8,7 @@ app.register_blueprint(api_v1, url_prefix="/api/v1")
 
 @app.route('/')
 def hello():
-    return "Hello World"
+    return render_template("main.html")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 dbfile = os.path.join(basedir, 'db.sqlite')
