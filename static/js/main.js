@@ -12,7 +12,6 @@ let loadStat = 0;
 let colorCLickStatus = null;
 let clickColor;
 
-
 function delTag(event) {
 
     const delId = event.toElement.id;
@@ -163,35 +162,39 @@ function colorEvent() {
 
 function showtodoList(todo, tagList, bgColor) {
 
-    const div = document.createElement("div");
+    const todoForm = document.createElement("div");
     const checkBox = document.createElement("input");
     const label = document.createElement("label");
-    const p = document.createElement("p");
+    const todoP = document.createElement("p");
     const span = document.createElement("span");
     const color = document.createElement("div");
+    const img = document.createElement("img");
 
-    div.classList.add("todo");
+    const br = document.createElement("br");
 
+    const section1 = document.createElement("div");
+    const section2 = document.createElement("div");
+    const dateForm = document.createElement("p");
+
+    const date = new Date();
+
+
+    //section 나누기
+    section1.classList.add("section1");
+    section2.classList.add("section2");
+
+
+
+    //section1 추가
+    todoForm.classList.add("todo");
     checkBox.type = "checkbox";
     checkBox.id = "ch1";
 
     label.htmlFor = "ch1";
     label.appendChild(span);
 
-    p.innerHTML = todo;
-
-    div.appendChild(checkBox);
-    div.appendChild(label);
-    div.appendChild(p);
-
-    tagList.forEach(function(element) {
-        const pp = document.createElement("p");
-        pp.innerHTML = element;
-        pp.classList.add("Tag");
-
-        div.appendChild(pp);
-
-    });
+    todoP.innerHTML = todo;
+    todoP.classList.add("todoP");
 
     if(bgColor !== null) {
 
@@ -200,9 +203,39 @@ function showtodoList(todo, tagList, bgColor) {
 
     }
 
-    div.appendChild(color);
+    section1.appendChild(color);
+    section1.appendChild(checkBox);
+    section1.appendChild(label);
+    section1.appendChild(todoP);
+    
 
-    todoListForm.appendChild(div);
+    //section2 추가
+    const tagForm = document.createElement("p"); // tag 이미지 추가
+    img.src = "../static/img/tag-window-50.png";
+    img.classList.add("tagImg");
+    
+
+    if(tagList.length === 0) {
+        tagForm.innerHTML = `none tag`;
+    } else {
+        tagForm.innerHTML = `${tagList[0]} more ${tagList.length-1}`;
+    }
+
+
+    dateForm.innerHTML = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}.${date.getMinutes()}`;
+    section2.appendChild(dateForm);     
+    section2.appendChild(br);
+    section2.appendChild(img);
+    section2.appendChild(tagForm);
+
+
+    //div에 section 1,2 추가
+    todoForm.appendChild(section1);
+    todoForm.appendChild(section2);
+
+    
+
+    todoListForm.appendChild(todoForm);
 
 }
 
@@ -235,7 +268,7 @@ function init(){
     readDB();
     colorEvent();
 
-    enrollEvent();   
+    enrollEvent();
 
 }
 

@@ -1,24 +1,22 @@
 <!DOCTYPE html>
     <head>
         <title>clock</title>
+        <link rel="stylesheet" href="../static/css/main.css"/>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-
     </head>
 
     <body>
-
         <header>
             <h1>Project Name</h1>
         </header>
 
         <div class="middle">
-    
+
                 <nav>
 
                     <div class="todoInput">
                         <h4>Make todo list</h4>
-                        <input class="inputSize" placeholder="Write to do list" id="title"/>
+                        <input class="inputSize" value="aaa" placeholder="Wrtie to do list"/>
                         <hr>  
                     </div>
                     
@@ -29,7 +27,7 @@
                         </div>
 
                         <div class="posTag js-tagList">
-                            <!-- Tag List update area -->
+                            <!-- Tag List upadate area -->
                         </div>
                         
                         
@@ -73,15 +71,18 @@
                             <legend>test</legend>
                         </fieldset>
 
+                        <!-- test -->
+                        
 
-                       
+
+<!--                         
                         <div class="todo">
                                 <input class="checkBox" type="checkbox" id="ch1">
                                 <label for="ch1"><span></span></label>
 
                                 <div class="colorForm"></div>
-                        </div>
-                        
+                        </div> -->
+
                     </div>
 
                     <div class="showTodoList" style="float: right;">
@@ -98,7 +99,7 @@
             
 
         </div>
-
-        <script src="{{url_for('static', filename='js/main.js')}}"></script>
+        
+        <script src="../static/js/main.js"></script>
     </body>
 </html>
