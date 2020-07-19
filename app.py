@@ -6,6 +6,10 @@ from api_v1 import api as api_v1
 app = Flask(__name__)
 app.register_blueprint(api_v1, url_prefix="/api/v1")
 
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
 @app.route('/')
 def hello():
     return render_template("main.html")
@@ -16,7 +20,7 @@ dbfile = os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + dbfile
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFYCATIONS'] = False 
-app.config['SECRET_KEY'] = 'qwerqerqwerqwer'
+app.config['SECRET_KEY'] = 'super secret key'
 
 db.init_app(app)
 db.app = app
