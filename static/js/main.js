@@ -3,9 +3,34 @@ const tagListForm = document.querySelector(".js-tagList"),
     tagManageForm = document.querySelector(".js-tagList"), 
     todoInputForm = document.querySelector(".inputSize"),
     todoListForm = document.querySelector(".showTodoList"),
-    todoEnrollForm = document.querySelector(".js-todoEnroll");
+    todoEnrollForm = document.querySelector(".js-todoEnroll"),
+    filterForm = document.querySelector("js-filterForm");
 
+
+let todoId = 0;
 const list = [];
+const todoObj = [
+
+    /* example
+    {
+        todo:"AAA",
+        tag:["aaa","bbb","ccc"],
+        clickColor = "red",
+        date:"2020.07.19",
+        checked:true
+    },
+    
+    {
+        todo:"BBB",
+        tag:["ddd","eee","fff"],
+        clickColor = "blue",
+        date:"2020.07.20",
+        checked:false
+    }
+    */
+
+];
+
 
 let tagId = 0;
 let loadStat = 0;
@@ -94,7 +119,6 @@ function createTag(element) {
         input.focus();
     }
 
-    //addEventListener("submit",)
 }
 
 function addNewForm() {
@@ -104,6 +128,8 @@ function addNewForm() {
 }
 
 function readDB(){
+
+    // ******** db 읽는 코드 추가 필요 ********
 
     if(list !== null){
         list.forEach(createTag);
@@ -160,7 +186,7 @@ function colorEvent() {
 
 }
 
-function showtodoList(todo, tagList, bgColor) {
+function showtodoList(todo, tagList, bgColor, nowDate) {
 
     const todoForm = document.createElement("div");
     const checkBox = document.createElement("input");
@@ -176,7 +202,6 @@ function showtodoList(todo, tagList, bgColor) {
     const section2 = document.createElement("div");
     const dateForm = document.createElement("p");
 
-    const date = new Date();
 
 
     //section 나누기
@@ -188,9 +213,11 @@ function showtodoList(todo, tagList, bgColor) {
     //section1 추가
     todoForm.classList.add("todo");
     checkBox.type = "checkbox";
-    checkBox.id = "ch1";
+    checkBox.id = `ch${todoId}`;
 
-    label.htmlFor = "ch1";
+    label.htmlFor = `ch${todoId}`;
+    todoId++;
+
     label.appendChild(span);
 
     todoP.innerHTML = todo;
@@ -222,7 +249,7 @@ function showtodoList(todo, tagList, bgColor) {
     }
 
 
-    dateForm.innerHTML = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}.${date.getMinutes()}`;
+    dateForm.innerHTML = nowDate;
     section2.appendChild(dateForm);     
     section2.appendChild(br);
     section2.appendChild(img);
@@ -250,15 +277,46 @@ function passTodoData() {
         tagList.push(e.textContent);
     }
 
-    console.log(todo, tagList, clickColor);
+    const date = new Date();
+    const nowDate = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
 
-    showtodoList(todo, tagList, clickColor);
+    showtodoList(todo, tagList, clickColor, nowDate);
+
+    // ******** DB에 데이터 전송 코드 필요 ********
+    
+    
+    // ******** todolist 전반적인 obj 제작 필요 ********
+    todoListAppend(todo, tagList, clickColor, nowDate, true);
+    
+
+}
+
+function todoListAppend(todo,tagList,clickColor,date,checked) {
+
+    const Obj = {
+        todo,
+        tagList,
+        color: clickColor,
+        date: date,
+        checked
+    }
+
+    console.log(Obj);
+    todoObj.push(Obj);
+    console.log(todoObj);
+
+}
+
+function filterList() {
+
+    
 
 }
 
 function enrollEvent() {
 
     todoEnrollForm.addEventListener("click",passTodoData);
+    filterForm.addEventListener("click",filterList);
 
 }
 
@@ -272,5 +330,4 @@ function init(){
 
 }
 
-console.log("Asdfsa");
 init();

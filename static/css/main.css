@@ -210,14 +210,21 @@ h4 {
     margin-top: 15px;
     margin-right: 15px;
 
-    text-align: right;
+    height: 9%;
 
     padding: 5px auto;
 
 }
 
-.showTodoList {
+.right {
+    float: right;
+}
+.padding {
+    padding-right: 30px;
+    padding-top: 10px;
+}
 
+.showTodoList {
 
     width: 48%;
     height: 80%;
@@ -346,4 +353,22 @@ input[type="checkbox"]:checked + label span {
     text-align: right;
     margin-right: 10px;
 
+}
+
+
+.demo-01 {
+
+    transition-property: margin-right;
+    transition-duration: 2s;
+
+}
+.demo-01:hover {
+
+    margin-right: 100px;
+    
+}
+
+.demo-02:hover {
+    font-size: 200%;
+    color: red;
 }
