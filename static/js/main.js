@@ -4,7 +4,7 @@ const tagListForm = document.querySelector(".js-tagList"),
     todoInputForm = document.querySelector(".inputSize"),
     todoListForm = document.querySelector(".showTodoList"),
     todoEnrollForm = document.querySelector(".js-todoEnroll"),
-    filterForm = document.querySelector("js-filterForm");
+    filterForm = document.querySelector(".js-filterForm");
 
 
 let todoId = 0;
@@ -309,7 +309,15 @@ function todoListAppend(todo,tagList,clickColor,date,checked) {
 
 function filterList() {
 
-    
+    // ******** filter 선택 기능 필요 ********    
+
+    let filter;
+
+    if(1) {
+
+        
+
+    }
 
 }
 
@@ -324,9 +332,18 @@ function init(){
 
     
     readDB();
-    colorEvent();
+    //colorEvent();
 
-    enrollEvent();
+    ///enrollEvent();
+
+    let yourUrl = "/api/v1/List";
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", yourUrl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+    value: "value"
+}));
 
 }
 
