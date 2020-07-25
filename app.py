@@ -2,6 +2,7 @@ import os
 from flask import Flask,render_template
 from models import db
 from api_v1 import api as api_v1
+from flask_jwt import JWT
 
 app = Flask(__name__)
 app.register_blueprint(api_v1, url_prefix="/api/v1")

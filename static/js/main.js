@@ -473,6 +473,7 @@ function init(){
     enrollEvent();
     /*
 
+<<<<<<< HEAD
     const todofilter = [
         
         {
@@ -512,6 +513,11 @@ function init(){
 
             ]
         }
+=======
+    
+     
+    let yourUrl = "/api/v1/List";
+>>>>>>> f1fa7bec259d6d3ce2abc3696f71281aa59e0c84
 
     ]
 
