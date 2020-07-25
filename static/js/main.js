@@ -332,18 +332,20 @@ function init(){
 
     
     readDB();
-    //colorEvent();
+    colorEvent();
 
-    ///enrollEvent();
+    enrollEvent();
 
+    
     let yourUrl = "/api/v1/List";
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", yourUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
-    value: "value"
-}));
+        value: "value"
+    }));
+
 
 }
 
