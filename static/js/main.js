@@ -2,32 +2,37 @@ const tagListForm = document.querySelector(".js-tagList"),
     createTagForm = document.querySelector(".js-createTag"),
     tagManageForm = document.querySelector(".js-tagList"), 
     todoInputForm = document.querySelector(".inputSize"),
-    todoListForm = document.querySelector(".showTodoList"),
+    //todoListForm = document.querySelector(".showTodoList"),
     todoEnrollForm = document.querySelector(".js-todoEnroll"),
-    filterForm = document.querySelector(".js-filterForm");
+    filterForm = document.querySelector(".js-filterForm"),
+    showTodoForm1 = document.querySelector(".js-showTodoForm1"),
+    showTodoForm2 = document.querySelector(".js-showTodoForm2");
 
-
+let filterName= "";
+let filterClass = [];
+let fieldFormSw = 1;
 let todoId = 0;
 const list = [];
 const todoObj = [
-
-    /* example
-    {
-        todo:"AAA",
-        tag:["aaa","bbb","ccc"],
-        clickColor = "red",
-        date:"2020.07.19",
-        checked:true
-    },
     
+    /*
     {
         todo:"BBB",
         tag:["ddd","eee","fff"],
         clickColor = "blue",
-        date:"2020.07.20",
+        date:"2020.07.19",
+        checked:false
+    },
+
+    {
+        todo:"CCC",
+        tag:["ggg","hhh","iii"],
+        clickColor = "blue",
+        date:"2021.07.20",
         checked:false
     }
     */
+    
 
 ];
 
@@ -89,27 +94,6 @@ function createTag(element) {
     const span = document.createElement("span");
     const input = document.createElement("input");
     
-    if(loadStat === 0){
-
-        const tag = document.createElement("p");
-        const delImg = document.createElement("img");
-
-        tag.innerText = element;
-        span.appendChild(tag);
-    
-        delImg.src = "https://img.icons8.com/ios-glyphs/30/000000/delete-sign.png";
-        delImg.classList.add("delImg");
-        delImg.id = tagId;
-
-        tagId++;
-
-        delImg.addEventListener("click",delTag);        
-        span.appendChild(delImg);
-        span.classList.add("Tag");
-        tagListForm.appendChild(span);
-
-    } else {
-
         input.classList.add("tagInput");
         input.onkeypress = enterCheck;
         input.placeholder = "New Tag";
@@ -117,7 +101,7 @@ function createTag(element) {
         span.appendChild(input);
         tagListForm.appendChild(span);
         input.focus();
-    }
+    
 
 }
 
@@ -130,14 +114,155 @@ function addNewForm() {
 function readDB(){
 
     // ******** db 읽는 코드 추가 필요 ********
+    /*
+    todo:"AAA",
+        tag:["aaa","bbb","ccc"],
+        clickColor = "red",
+        date:"2020.07.18",
+        checked:true
+    */
+    //example
+    const Data = [
 
-    if(list !== null){
-        list.forEach(createTag);
-        loadStat = 1;
-    }
+        {
+            filter: "2018",
+            content: [
 
+                {
+                    todo: "AAA",
+                    content: ["a","b",'c'],
+                    clickColor: "red",
+                    date: "2018.01.01",
+                    checked: false
+                },
+
+                {
+                    todo: "BBB",
+                    content: ["a",'b'],
+                    clickColor: "blue",
+                    date: "2018.02.02",
+                    checked: false
+                },
+
+                {
+                    todo: "CCC",
+                    content: ["a",'b'],
+                    clickColor: "blue",
+                    date: "2018.02.02",
+                    checked: false
+                }
+
+            ]
+        },
+
+        {
+            filter: "2019",
+            content: [
+
+                {
+                    todo: "CCC",
+                    content: ["a","b"],
+                    clickColor: "red",
+                    date: "2019.01.01",
+                    checked: false
+                },
+
+                {
+                    todo: "DDD",
+                    content: ["a","b"],
+                    clickColor: "blue",
+                    date: "2019.02.02",
+                    checked: true
+                }
+
+            ]
+        },
+
+        {
+            filter: "2020",
+            content: [
+
+                {
+                    todo: "CCC",
+                    content: ["a","b"],
+                    clickColor: "red",
+                    date: "2020.01.01",
+                    checked: false
+                },
+
+                {
+                    todo: "DDD",
+                    content: ["a","b"],
+                    clickColor: "blue",
+                    date: "2020.02.02",
+                    checked: true
+                }
+
+            ]
+        }
+
+    ];
+
+    filterName = "date:year";
+
+    console.log(Data);
+
+    Data.forEach(function(d) {
+        
+        // filter head? title? 부분 생성
+        makeFieldSet(d.filter);
+        filterClass.push(d.filter);
+
+        console.log(d.filter);
+
+        d.content.forEach(function(dCon) {
+
+            // filter content 부분 생성
+            console.log(dCon, dCon.content);
+            showtodoList(dCon.todo, dCon.content, dCon.clickColor, dCon.date);
+        });
+
+        if(fieldFormSw === 1) fieldFormSw = 2;
+        else fieldFormSw = 1;
+
+        console.log("finish");
+    });
+
+    console.log(filterClass);
+    console.log(list);
     createTagForm.addEventListener("click", addNewForm);
     
+}
+
+function makeFieldSet(text) {
+    
+    const fieldSet = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+
+    legend.innerHTML = text;
+    fieldSet.appendChild(legend);
+    fieldSet.classList.add("field");
+
+
+    //filedList 에 추가 push
+    let o = {
+        text,
+        fieldSet
+    }
+
+    list.push(o);
+
+    
+    if(fieldFormSw === 1){
+        showTodoForm1.appendChild(fieldSet);
+    } else {
+        showTodoForm2.appendChild(fieldSet);
+    }
+
+
+    console.log("make Field");
+
+    //console.log(text);
 
 }
 
@@ -242,7 +367,7 @@ function showtodoList(todo, tagList, bgColor, nowDate) {
     img.classList.add("tagImg");
     
 
-    if(tagList.length === 0) {
+    if(tagList.length === 0 || tagList === undefined) {
         tagForm.innerHTML = `none tag`;
     } else {
         tagForm.innerHTML = `${tagList[0]} more ${tagList.length-1}`;
@@ -262,7 +387,17 @@ function showtodoList(todo, tagList, bgColor, nowDate) {
 
     
 
-    todoListForm.appendChild(todoForm);
+    if(fieldFormSw === 1) {
+        showTodoForm1.appendChild(todoForm);
+    } else {
+
+        // 왜인지는 모르겠지만 딜레이가 있어야 fieldSet 아래로 내려가더라.. 모르겠다~
+        setTimeout(function() {
+            showTodoForm2.appendChild(todoForm);
+          }, 0  );
+        
+    }
+    
 
 }
 
@@ -271,6 +406,8 @@ function passTodoData() {
     const todo = todoInputForm.value;
     let tagList = [];
     let e;
+
+    // Data push
 
     for(let i=0;i<tagManageForm.childElementCount;i++){
         e = document.getElementById(i).previousSibling;
@@ -285,10 +422,9 @@ function passTodoData() {
     // ******** DB에 데이터 전송 코드 필요 ********
     
     
-    // ******** todolist 전반적인 obj 제작 필요 ********
+    // ******** todolist 전반적인 obj push 기능 필요 ********
     todoListAppend(todo, tagList, clickColor, nowDate, true);
     
-
 }
 
 function todoListAppend(todo,tagList,clickColor,date,checked) {
@@ -335,17 +471,54 @@ function init(){
     colorEvent();
 
     enrollEvent();
+    /*
+
+    const todofilter = [
+        
+        {
+            filter: "2018",
+            content: [
+
+                {
+                    title: "AAA",
+                    content: "aaa",
+                    date: "2018.01.01"
+                },
+
+                {
+                    title: "BBB",
+                    content: "bbb",
+                    date: "2018.02.02"
+                }
+
+            ]
+        },
+
+        {
+            filter: "2019",
+            content: [
+
+                {
+                    title: "CCC",
+                    content: "ccc",
+                    date: "2019.01.01"
+                },
+
+                {
+                    title: "DDD",
+                    content: "ddd",
+                    date: "2019.02.02"
+                }
+
+            ]
+        }
+
+    ]
+
+    console.log(todofilter);
+    */
 
     
-    let yourUrl = "/api/v1/List";
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", yourUrl, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({
-        value: "value"
-    }));
-
 
 }
 
