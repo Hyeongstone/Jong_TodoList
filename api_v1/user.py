@@ -1,5 +1,5 @@
 from flask import request, jsonify, session
-
+from datetime import datetime
 from models import AddList, db
 from . import api
 
@@ -28,7 +28,8 @@ def addList():
 
     return jsonify([mkList.serialize for mkList in Lists]) 
 
-@api.route('List/<data>', methods=['GET'])
-def filter_word(data):
-    filter_datas = AddList.query.filter(AddList.color == data)
-    return jsonify([filter_data.serialize for filter_data in filter_datas])
+@api.route('List/<filter_word>', methods=['GET'])
+def time_filter(filter_word):
+    datetime_datas = AddList.query.order_by(AddList.pub_date.desc()).all()
+    [datetime_data.serialize for datetime_data in datetime_datas]
+    return jsonify([datetime_data.serialize for datetime_data in datetime_datas])
