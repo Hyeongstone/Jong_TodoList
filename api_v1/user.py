@@ -28,4 +28,7 @@ def addList():
 
     return jsonify([mkList.serialize for mkList in Lists]) 
 
-    
+@api.route('List/<data>', methods=['GET'])
+def filter_word(data):
+    filter_datas = AddList.query.filter(AddList.color == data)
+    return jsonify([filter_data.serialize for filter_data in filter_datas])

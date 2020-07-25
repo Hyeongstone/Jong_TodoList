@@ -336,25 +336,18 @@ function init(){
 
     enrollEvent();
 
-<<<<<<< Updated upstream
     
-=======
      
->>>>>>> Stashed changes
     let yourUrl = "/api/v1/List";
 
     let xhr = new XMLHttpRequest();
     xhr.open("GET", yourUrl, true);
-<<<<<<< Updated upstream
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
         value: "value"
     }));
 
 
-=======
-    xhr.send(null);
->>>>>>> Stashed changes
 }
 
 init();
