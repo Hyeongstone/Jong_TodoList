@@ -1,6 +1,6 @@
 from flask import request, jsonify, session
 
-from models import AddList, AddTag, db
+from models import AddList, db
 from . import api
 
 
@@ -13,23 +13,19 @@ def addList():
         tag = request.form.get('tag')
 
         addList = AddList()
-        addTag = AddTag()
         addList.title = title
+        addList.tag = tag
         addList.color = color
 
-        addTag.addList_title = title
-        addTag.tag = tag
-
         db.session.add(addList)
-        db.session.add(addTag)
         db.session.commit()
 
-        return jsonify(), 201
+        Lists = AddList.query.all()
+
+        return jsonify([mkList.serialize for mkList in Lists]), 201
     
     Lists = AddList.query.all()
-    Tags = AddTag.query.all()
 
-    return jsonify([mkList.serialize for mkList in Lists])
-    # return jsonify([mktags.serialize for mktags in Tags])
+    return jsonify([mkList.serialize for mkList in Lists]) 
 
     
