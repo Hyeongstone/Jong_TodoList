@@ -178,9 +178,32 @@ function readDB(){
 
             ]
         },
-
+        
         {
             filter: "2020",
+            content: [
+
+                {
+                    todo: "CCC",
+                    content: ["a","b"],
+                    clickColor: "red",
+                    date: "2020.01.01",
+                    checked: false
+                },
+
+                {
+                    todo: "DDD",
+                    content: ["a","b"],
+                    clickColor: "blue",
+                    date: "2020.02.02",
+                    checked: true
+                }
+
+            ]
+        },
+
+        {
+            filter: "2021",
             content: [
 
                 {
@@ -247,8 +270,6 @@ function readDB(){
 
     });
 
-    console.log(filterClass);
-    console.log("list: ",list);
     createTagForm.addEventListener("click", addNewForm);
     
 }
@@ -420,7 +441,47 @@ function showtodoList(todo, tagList, bgColor, nowDate ,checked, status) {
         function date() {
             console.log("for date");
             
+            const a = filterName.substring(5,);
+            const d = nowDate.split(".");
+            let standard = "";
+
+            if(a === "year"){
+                standard = d[0];
+            } else if(a === "month"){
+                standard = d[1];
+            } else if(a === "day"){
+                standard = d[2];
+            }
+
+            let s="";
+
+            filterClass.forEach(element => {
+                if(element[0] === standard){
+                    s = element[1];
+                }    
+            });
             
+
+            if(s === ""){
+                // fieldset 리스트에 현재 기준이 존재하지 않는다면
+                makeFieldSet(standard);
+                const a = [
+                    standard, document.getElementById(standard)
+                ];
+                s = a[1];
+
+                console.log("filterClass: ",s,filterClass);
+                
+                filterClass.push(a);
+
+                console.log(filterClass);
+            }
+
+
+            //console.log(standard);
+            
+            s.appendChild(todoForm);
+        
         }
 
         function checked() {
