@@ -12,6 +12,7 @@ let filterName= "";
 let filterClass = [];
 let fieldFormSw = 1;
 let todoId = 0;
+
 const list = [];
 const todoObj = [
     
@@ -154,7 +155,7 @@ function readDB(){
 
             ]
         },
-
+        
         {
             filter: "2019",
             content: [
@@ -200,6 +201,7 @@ function readDB(){
 
             ]
         }
+        
 
     ];
 
@@ -211,25 +213,42 @@ function readDB(){
         
         // filter head? title? 부분 생성
         makeFieldSet(d.filter);
-        filterClass.push(d.filter);
 
-        console.log(d.filter);
+        const a = [
+            d.filter,
+            document.getElementById(d.filter.substring(0,4))
+        ];
+        
+        filterClass.push(a);
+        console.log("push!!");
+
+        console.log("AAAAAAAAAAAAAAAAAAAAA");
 
         d.content.forEach(function(dCon) {
 
+            console.log("BBBBBBBBBBBBBBBBBBBB");
+
             // filter content 부분 생성
-            console.log(dCon, dCon.content);
-            showtodoList(dCon.todo, dCon.content, dCon.clickColor, dCon.date);
+            //console.log(dCon, dCon.content);
+            const o = {
+                todo: dCon.todo,
+                content: dCon.content,
+                clickColor: dCon.clickColor,
+                date: dCon.date,
+                checked: dCon.checked
+            };
+            todoObj.push(o);
+            console.log(filterClass.length);
+            showtodoList(dCon.todo, dCon.content, dCon.clickColor, dCon.date, dCon.checked, true);
         });
 
         if(fieldFormSw === 1) fieldFormSw = 2;
         else fieldFormSw = 1;
 
-        console.log("finish");
     });
 
     console.log(filterClass);
-    console.log(list);
+    console.log("list: ",list);
     createTagForm.addEventListener("click", addNewForm);
     
 }
@@ -238,29 +257,20 @@ function makeFieldSet(text) {
     
     const fieldSet = document.createElement("fieldset");
     const legend = document.createElement("legend");
+    const div = document.createElement("sapn");
 
     legend.innerHTML = text;
     fieldSet.appendChild(legend);
     fieldSet.classList.add("field");
 
-
-    //filedList 에 추가 push
-    let o = {
-        text,
-        fieldSet
-    }
-
-    list.push(o);
-
+    div.appendChild(fieldSet);
+    div.id = text;
     
     if(fieldFormSw === 1){
-        showTodoForm1.appendChild(fieldSet);
+        showTodoForm1.appendChild(div);
     } else {
-        showTodoForm2.appendChild(fieldSet);
+        showTodoForm2.appendChild(div);
     }
-
-
-    console.log("make Field");
 
     //console.log(text);
 
@@ -311,7 +321,7 @@ function colorEvent() {
 
 }
 
-function showtodoList(todo, tagList, bgColor, nowDate) {
+function showtodoList(todo, tagList, bgColor, nowDate ,checked, status) {
 
     const todoForm = document.createElement("div");
     const checkBox = document.createElement("input");
@@ -339,6 +349,13 @@ function showtodoList(todo, tagList, bgColor, nowDate) {
     todoForm.classList.add("todo");
     checkBox.type = "checkbox";
     checkBox.id = `ch${todoId}`;
+
+    // ************* chked 데이터 처리 필요 **********************
+    if(checked === true){
+
+    } else {
+
+    }
 
     label.htmlFor = `ch${todoId}`;
     todoId++;
@@ -384,18 +401,44 @@ function showtodoList(todo, tagList, bgColor, nowDate) {
     //div에 section 1,2 추가
     todoForm.appendChild(section1);
     todoForm.appendChild(section2);
-
     
+    // 처음 출력인지 중간에 새로 만드는 것인지 확인
+    if(status===false){
 
-    if(fieldFormSw === 1) {
-        showTodoForm1.appendChild(todoForm);
+        console.log(filterName.substring(0,4) , filterClass);
+        const str = filterName.substring(0,4);
+
+        console.log(showTodoForm1.childNodes , showTodoForm2.childNodes);
+
+        switch(str){
+            case "date": date(); break;
+            case "chec": checked(); break;
+            case "colo": color(); break;
+            case "tagd": tag(); break;
+        }
+
+        function date() {
+            console.log("for date");
+            
+            
+        }
+
+        function checked() {
+            console.log("for checked");
+        }
+
+        function color() {
+            console.log("for color");
+        }
+
+        function tag() {
+            console.log("for tag");
+        }
+
     } else {
 
-        // 왜인지는 모르겠지만 딜레이가 있어야 fieldSet 아래로 내려가더라.. 모르겠다~
-        setTimeout(function() {
-            showTodoForm2.appendChild(todoForm);
-          }, 0  );
-        
+        filterClass[filterClass.length-1][1].appendChild(todoForm);
+
     }
     
 
@@ -408,7 +451,6 @@ function passTodoData() {
     let e;
 
     // Data push
-
     for(let i=0;i<tagManageForm.childElementCount;i++){
         e = document.getElementById(i).previousSibling;
         tagList.push(e.textContent);
@@ -417,8 +459,9 @@ function passTodoData() {
     const date = new Date();
     const nowDate = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
 
-    showtodoList(todo, tagList, clickColor, nowDate);
+    showtodoList(todo, tagList, clickColor, nowDate, true , false);
 
+    
     // ******** DB에 데이터 전송 코드 필요 ********
     
     
@@ -431,15 +474,17 @@ function todoListAppend(todo,tagList,clickColor,date,checked) {
 
     const Obj = {
         todo,
-        tagList,
+        content: tagList,
         color: clickColor,
         date: date,
         checked
     }
 
+    /*
     console.log(Obj);
     todoObj.push(Obj);
     console.log(todoObj);
+    */
 
 }
 
@@ -471,9 +516,11 @@ function init(){
     colorEvent();
 
     enrollEvent();
+
+    //console.log(filterName,filterClass);
+
     /*
 
-<<<<<<< HEAD
     const todofilter = [
         
         {
@@ -513,12 +560,8 @@ function init(){
 
             ]
         }
-=======
-    
      
     let yourUrl = "/api/v1/List";
->>>>>>> f1fa7bec259d6d3ce2abc3696f71281aa59e0c84
-
     ]
 
     console.log(todofilter);
