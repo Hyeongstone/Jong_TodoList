@@ -123,6 +123,7 @@ aside {
 
     display: inline-block;
 
+    animation: fadeIn 1s linear;
     
     border-top: 5px solid var(--color-blue);
     border-left: 5px solid var(--color-blue);
@@ -244,6 +245,8 @@ h4 {
 
     color: gray;
 
+    animation: fadeIn 1s linear;
+
 }
 
 legend {
@@ -265,7 +268,18 @@ legend {
     margin: auto auto;
 
     margin-bottom: 2px;
+
+    animation: fadeIn 1s linear;
     
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 input[type="checkbox"] {
