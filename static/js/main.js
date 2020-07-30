@@ -2,16 +2,17 @@ const tagListForm = document.querySelector(".js-tagList"),
     createTagForm = document.querySelector(".js-createTag"),
     tagManageForm = document.querySelector(".js-tagList"), 
     todoInputForm = document.querySelector(".inputSize"),
-    //todoListForm = document.querySelector(".showTodoList"),
     todoEnrollForm = document.querySelector(".js-todoEnroll"),
-    filterForm = document.querySelector(".js-filterForm"),
     showTodoForm1 = document.querySelector(".js-showTodoForm1"),
     showTodoForm2 = document.querySelector(".js-showTodoForm2");
 
 let filterName= "";
 let filterClass = [];
+let filterchecked = [];
 let fieldFormSw = 1;
 let todoId = 0;
+
+let Data = [];
 
 const list = [];
 const todoObj = [
@@ -123,8 +124,8 @@ function readDB(){
         checked:true
     */
     //example
-    const Data = [
-
+    Data = [
+        
         {
             filter: "2018",
             content: [
@@ -225,53 +226,73 @@ function readDB(){
             ]
         }
         
-
     ];
 
     filterName = "date:year";
 
-    console.log(Data);
+    Data.forEach(function(element){
+
+        console.log(element.filter);
+        filterchecked.push(element.filter);
+
+    });
+
+    console.log("filter :", filterchecked);
+
+    makeTodoFilter();
+}
+
+function makeTodoFilter() {
+
+    console.log(Data, filterchecked);
 
     Data.forEach(function(d) {
         
         // filter head? title? 부분 생성
-        makeFieldSet(d.filter);
+        console.log("d :",d.filter);
 
-        const a = [
-            d.filter,
-            document.getElementById(d.filter.substring(0,4))
-        ];
+        for(let ia=0;ia<filterchecked.length;ia++){
+            console.log("comparison :", filterchecked[ia], d.filter, ia);
+            
+            if(filterchecked[ia] === d.filter){
+
+                makeFieldSet(d.filter);
+
+                const a = [
+                    d.filter,
+                    document.getElementById(d.filter.substring(0,4))
+                ];
         
-        filterClass.push(a);
-        console.log("push!!");
+                filterClass.push(a);
 
-        console.log("AAAAAAAAAAAAAAAAAAAAA");
+                d.content.forEach(function(dCon) {
+            
+                    // filter content 부분 생성
+                    //console.log(dCon, dCon.content);
+                    const o = {
+                        todo: dCon.todo,
+                        content: dCon.content,
+                        clickColor: dCon.clickColor,
+                        date: dCon.date,
+                        checked: dCon.checked
+                    };
+                    todoObj.push(o);
+                    showtodoList(dCon.todo, dCon.content, dCon.clickColor, dCon.date, dCon.checked, true);
+                });
 
-        d.content.forEach(function(dCon) {
+                if(fieldFormSw === 1) fieldFormSw = 2;
+                else fieldFormSw = 1;
 
-            console.log("BBBBBBBBBBBBBBBBBBBB");
-
-            // filter content 부분 생성
-            //console.log(dCon, dCon.content);
-            const o = {
-                todo: dCon.todo,
-                content: dCon.content,
-                clickColor: dCon.clickColor,
-                date: dCon.date,
-                checked: dCon.checked
-            };
-            todoObj.push(o);
-            console.log(filterClass.length);
-            showtodoList(dCon.todo, dCon.content, dCon.clickColor, dCon.date, dCon.checked, true);
-        });
-
-        if(fieldFormSw === 1) fieldFormSw = 2;
-        else fieldFormSw = 1;
+                break;
+            }
+            
+        }
+        
 
     });
 
     createTagForm.addEventListener("click", addNewForm);
-    
+
 }
 
 function makeFieldSet(text) {
@@ -505,6 +526,39 @@ function showtodoList(todo, tagList, bgColor, nowDate ,checked, status) {
 
 }
 
+function addFilterList(){
+
+    console.log("filterchecked :",filterchecked);
+
+    filterchecked.forEach(function(element){
+
+        const dropdownContent = document.querySelector(".dropdown-content");
+        const span = document.createElement("span"),
+            checkBox = document.createElement("input"),
+            label = document.createElement("label"),
+            innerSpan = document.createElement("span"),
+            br = document.createElement("br");
+    
+    
+        checkBox.id = "chC";
+        checkBox.type = "checkbox";
+        label.htmlFor = "chC";
+        label.innerHTML = element;
+    
+    
+        label.appendChild(innerSpan);
+        label.value = filterchecked[0];
+    
+        span.appendChild(checkBox);
+        span.appendChild(label);
+    
+        dropdownContent.appendChild(span);
+        dropdownContent.appendChild(br);
+
+    });
+
+}
+
 function passTodoData() {
 
     const todo = todoInputForm.value;
@@ -549,86 +603,20 @@ function todoListAppend(todo,tagList,clickColor,date,checked) {
 
 }
 
-function filterList() {
-
-    // ******** filter 선택 기능 필요 ********    
-
-    let filter;
-
-    if(1) {
-
-        
-
-    }
-
-}
-
 function enrollEvent() {
 
     todoEnrollForm.addEventListener("click",passTodoData);
-    filterForm.addEventListener("click",filterList);
-
+ 
 }
 
 function init(){
 
     
     readDB();
+    addFilterList();
     colorEvent();
 
     enrollEvent();
-
-    //console.log(filterName,filterClass);
-
-    /*
-
-    const todofilter = [
-        
-        {
-            filter: "2018",
-            content: [
-
-                {
-                    title: "AAA",
-                    content: "aaa",
-                    date: "2018.01.01"
-                },
-
-                {
-                    title: "BBB",
-                    content: "bbb",
-                    date: "2018.02.02"
-                }
-
-            ]
-        },
-
-        {
-            filter: "2019",
-            content: [
-
-                {
-                    title: "CCC",
-                    content: "ccc",
-                    date: "2019.01.01"
-                },
-
-                {
-                    title: "DDD",
-                    content: "ddd",
-                    date: "2019.02.02"
-                }
-
-            ]
-        }
-     
-    let yourUrl = "/api/v1/List";
-    ]
-
-    console.log(todofilter);
-    */
-
-    
 
 }
 
